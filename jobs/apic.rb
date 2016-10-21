@@ -1,7 +1,7 @@
 require 'acirb'
 require 'time'
 
-apicuri = 'https://172.26.19.7'
+apicuri = 'https://172.26.18.7'
 username = 'admin'
 password = 'cisco123'
 
@@ -156,16 +156,53 @@ def update_thrupt(thrupt_points, last_x, interfaces)
 end
 
 def update_health(rest, points, last_x)
-  dn = 'topology/HDfabricOverallHealth5min-0'
+  dn = 'topology/health'
   health = rest.lookupByDn(dn)
   if health
     points.shift
     last_x += 1
-    points << { x: last_x, y: health.healthAvg.to_i }
-    send_event('apic_health', points: points)
+    points << { x: last_x, y: health.cur.to_i }
+    status = case health.cur.to_i
+      when 90..100 
+        'ok'
+      when 75..89 
+        'danger'
+      else 
+        'warning'
+    end
+    send_event('apic_health', points: points, status: status)
   end
   [last_x, points]
 end
+
+def update_unreachable_switch(rest)
+  cq = ACIrb::ClassQuery.new('fabricNode')
+  cq.prop_filter = 'and(eq(fabricNode.fabricSt,"inactive"),ne(fabricNode.role,"unsupported"),ne(fabricNode.role,"controller"))'
+  cq.subtree_include = 'count'
+  unreachable_switch = rest.query(cq)
+  if unreachable_switch
+    count = unreachable_switch[0].count
+    status = case count.to_i
+      when 0
+        'ok'
+      else 
+        'warning'
+    end
+    send_event('apic_unreachable_switch', current: count, status: status)
+  end
+end
+
+def update_controller_status(rest)
+  cq = ACIrb::ClassQuery.new('infraWiNode')
+  cq.prop_filter = 'wcard(infraWiNode.dn, "topology/pod-1/node-1/av")'
+  controller_health = rest.query(cq)
+  puts controller_health
+  if controller_health
+    send_event('apic_controllerhealth', current: 1, status: 'ok')
+  end
+end
+
+
 
 scheduler = Rufus::Scheduler.start_new
 
@@ -180,23 +217,35 @@ scheduler.every '%ds' % (rest.refresh_time.to_i / 2) do
   login_time = Time.new.to_f
 end
 
-Thread.new do
-  loop do
-    puts 'Updating interface stats'
+#Thread.new do
+#  loop do
+#    puts 'Updating interface stats'
+#    interfaces = get_int_stats(rest)
+#    last_thrupt_x, thrupt_points = update_thrupt(thrupt_points,
+#                                                 last_thrupt_x, interfaces)
+#    last_tx, last_rx = update_unicast_per_second(last_tx, last_rx,
+#                                                 interfaces)
+#    sleep 3
+#  end
+#end
+
+scheduler.every '3s' do
+  Thread.new do
+  	puts 'Updating interface stats'
     interfaces = get_int_stats(rest)
     last_thrupt_x, thrupt_points = update_thrupt(thrupt_points,
                                                  last_thrupt_x, interfaces)
     last_tx, last_rx = update_unicast_per_second(last_tx, last_rx,
                                                  interfaces)
-    sleep 3
   end
-end
+end                                              
 
 scheduler.every '10s' do
-  puts 'Updating health and endpoint count'
+  puts 'Updating health, endpoint count, unreachable nodes'
   last_health_x, health_points = update_health(rest, health_points,
                                                last_health_x)
   last_endpoint_count = update_endpointcount(rest, last_endpoint_count)
+  update_unreachable_switch(rest)
 end
 
 scheduler.every '30s' do

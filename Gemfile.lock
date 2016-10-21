@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/
+  remote: http://rubygems.org/
   specs:
     acirb (1.2.1.0)
       httpclient (~> 2.6, >= 2.6.0.1)

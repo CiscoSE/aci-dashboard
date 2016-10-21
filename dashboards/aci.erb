@@ -9,7 +9,8 @@ $(function() {
   Dashing.numColumns = 5
 });
 </script>
-
+<script type='text/javascript'> $(function() { Dashing.gridsterLayout('[{"col":1,"row":2,"size_x":1,"size_y":1},{"col":2,"row":2,"size_x":2,"size_y":1},{"col":4,"row":1,"size_x":1,"size_y":1},{"col":5,"row":1,"size_x":1,"size_y":1},{"col":1,"row":3,"size_x":1,"size_y":1},{"col":2,"row":3,"size_x":1,"size_y":1},{"col":3,"row":3,"size_x":1,"size_y":1},{"col":1,"row":1,"size_x":2,"size_y":1},{"col":3,"row":1,"size_x":1,"size_y":1},{"col":4,"row":2,"size_x":2,"size_y":1},{"col":4,"row":3,"size_x":2,"size_y":1}]') }); </script>
+ 
 
 <div class="gridster">
   <ul>
@@ -17,7 +18,7 @@ $(function() {
       <div data-id="ep_chart" data-view="GooglePie"  data-title="Endpoint Types"></div>
     </li>
 
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+    <li data-row="1" data-col="2" data-sizex="2" data-sizey="1">
       <div data-id="latest_endpoints" data-view="List" data-unordered="true" data-title="Newest Endpoints"></div>
     </li>
 
@@ -26,27 +27,35 @@ $(function() {
     </li>
 
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="apic_freeports" data-view="Number" data-title="Free ports" data-moreinfo="Unused interfaces" style="background-color:#00FF00"></div>
+      <div data-id="apic_freeports" data-view="Number" data-title="Free ports" data-moreinfo="Unused interfaces"></div>
     </li>
 
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="apic_actrlrule" data-view="Number" data-title="ACL Rules" data-moreinfo="Programmed ACL Rules" style="background-color:#C5860F"></div>
+      <div data-id="apic_actrlrule" data-view="Number" data-title="ACL Rules" data-moreinfo="Programmed ACL Rules"></div>
     </li>
 
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="apic_packets_tx" data-view="Number" data-title="TX" data-moreinfo="Fabric Bytes Per Second TX" style="background-color:#FF0000"></div>
+      <div data-id="apic_packets_tx" data-view="Number" data-title="TX" data-moreinfo="Fabric Bytes Per Second TX"></div>
     </li>
 
     <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="apic_packets_rx" data-view="Number" data-title="RX" data-moreinfo="Fabric Bytes Per Second RX" style="background-color:#79FF00"></div>
-    </li>
-
-    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
-      <div data-id="apic_health" data-view="Graph" data-title="Fabric Health" data-moreinfo="Overall Fabric Healthscore" style="background-color:#ff9618"></div>
+      <div data-id="apic_packets_rx" data-view="Number" data-title="RX" data-moreinfo="Fabric Bytes Per Second RX"></div>
     </li>
 
     <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
-      <div data-id="apic_thrupt" data-view="Graph" data-title="Fabric Throughput" data-moreinfo="Total Sent and Received Fabric Bytes Per Second" style="background-color:#2222ff"></div>
+      <div data-id="apic_health" data-view="GraphHealth" data-title="Fabric Health" data-moreinfo="Overall Fabric Healthscore"></div>
+    </li>
+    
+    <li data-row="1" data-col="1" data-sizex="1" data-sizey="1">
+      <div data-id="apic_unreachable_switch" data-view="NumberHealth" data-title="Switches Down" data-moreinfo="Unreachable Nodes" data-url="https://172.26.19.7/#c:a.1|root|fabricUnreachableNodes"></div>
+    </li>
+
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="apic_thrupt" data-view="Graph" data-title="Fabric Throughput" data-moreinfo="Total Sent and Received Fabric Bytes Per Second"></div>
+    </li>
+    
+    <li data-row="1" data-col="1" data-sizex="2" data-sizey="1">
+      <div data-id="welcome" data-view="Text" data-title="ACI Dashboard - Planets" data-text="Welcome to Javad's Cisco Customer Proof of Concept Lab" data-moreinfo="Protip: You can drag the widgets around!"></div>
     </li>
 
   </ul>
