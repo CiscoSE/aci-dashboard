@@ -1,9 +1,9 @@
 require 'acirb'
 require 'time'
 
-apicuri = 'https://172.26.18.7'
+apicuri = 'https://APIC-IP'
 username = 'admin'
-password = 'cisco123'
+password = 'password'
 
 login_time = Time.new.to_f
 puts 'Connecting to APIC %s' % apicuri
@@ -163,11 +163,11 @@ def update_health(rest, points, last_x)
     last_x += 1
     points << { x: last_x, y: health.cur.to_i }
     status = case health.cur.to_i
-      when 90..100 
+      when 90..100
         'ok'
-      when 75..89 
+      when 75..89
         'danger'
-      else 
+      else
         'warning'
     end
     send_event('apic_health', points: points, status: status)
@@ -185,7 +185,7 @@ def update_unreachable_switch(rest)
     status = case count.to_i
       when 0
         'ok'
-      else 
+      else
         'warning'
     end
     send_event('apic_unreachable_switch', current: count, status: status)
@@ -238,7 +238,7 @@ scheduler.every '3s' do
     last_tx, last_rx = update_unicast_per_second(last_tx, last_rx,
                                                  interfaces)
   end
-end                                              
+end
 
 scheduler.every '10s' do
   puts 'Updating health, endpoint count, unreachable nodes'
