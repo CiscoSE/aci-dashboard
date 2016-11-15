@@ -21,7 +21,8 @@ password = 'password'
 docker run -v=/local/path/to/aci-dashboard/jobs:/jobs -v=/local/path/to/aci-dashboard/widgets:/widgets -v=/local/path/to/aci-dashboard/dashboards:/dashboards -d -e GEMS=acirb -p 3030:3030 frvi/dashing
 ```
 - Wait a couple minutes and access your local web server at http://localhost:3030
-- If the container does not have IP access to the APIC, the container will automatically quit.  For troubleshooting leverage
+- If the container does not have IP access to the APIC, the container will automatically quit.  
+- For troubleshooting leverage:
 ```
 docker logs CONTAINERID
 ```
