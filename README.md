@@ -1,21 +1,9 @@
 # Prerequisites
-- On Ubuntu, you will need to run the following to get some dependencies
-```
-sudo apt-get install ruby-dev ruby-libxml zlib1g-dev nodejs
-```
+- We recommend running with Docker to avoid complexity when installing dependencies.  Make sure your server has Docker installed.
 
 # Installation
-- Make sure you have ruby gems installed  
+- Clone the acidashboard github repo
   - https://rubygems.org/pages/download
-- Next, install dashing following the steps on the website  
-  - http://shopify.github.io/dashing/  
-  
-  Or, just run the following at your terminal.  
-  **Note**: you may need to prefix this with sudo depending on your installation  
-```
-gem install dashing bundler
-gem install acirb
-```
 - Change into the acirb/examples/acidashboard folder  
 ```
 cd acirb/examples/acidashboard
@@ -26,16 +14,17 @@ apicuri = 'https://apic'
 username = 'admin'
 password = 'password'
 ```
-- Run the "bundle" command
-```
-bundle
-```
+
 # Running
-- Run "dashing start" to start the dashboard
+- Start the Docker Container
 ```
-dashing start
+docker run -v=/local/path/to/aci-dashboard/jobs:/jobs -v=/local/path/to/aci-dashboard/widgets:/widgets -v=/local/path/to/aci-dashboard/dashboards:/dashboards -d -e GEMS=acirb -p 3030:3030 frvi/dashing
 ```
-- Access your local web server at http://localhost:3030
+- Wait a couple minutes and access your local web server at http://localhost:3030
+- If the container does not have IP access to the APIC, the container will automatically quit.  For troubleshooting leverage
+```
+docker logs CONTAINERID
+```
 
 # More information
 Check out http://shopify.github.com/dashing for more information about dashing
