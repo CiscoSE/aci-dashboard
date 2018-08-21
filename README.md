@@ -7,8 +7,7 @@ This repository provides an example of how to create a dashboard that pulls stat
 - We recommend running with Docker to avoid complexity when installing dependencies.  Make sure your server has Docker installed.
 
 # Installation
-- Clone the acidashboard github repo
-  - https://rubygems.org/pages/download
+- Clone this repo
 - Change into the acirb/examples/acidashboard folder  
 ```
 cd acirb/examples/acidashboard
