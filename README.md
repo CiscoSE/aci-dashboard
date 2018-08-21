@@ -1,3 +1,8 @@
+# Overview
+This repository provides an example of how to create a dashboard that pulls statistics from an ACI fabric in real-time like this...
+
+![alt text](example.png "Dashboard Example Screenshot")
+
 # Prerequisites
 - We recommend running with Docker to avoid complexity when installing dependencies.  Make sure your server has Docker installed.
 
