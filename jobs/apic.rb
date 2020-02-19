@@ -16,9 +16,9 @@
 require 'acirb'
 require 'time'
 
-apicuri = 'https://apic'
-username = 'admin'
-password = 'password'
+apicuri = ENV['ACI_APICURI'] || 'https://apic'
+username = ENV['ACI_USERNAME'] || 'admin'
+password = ENV['ACI_PASSWORD'] || 'password'
 
 login_time = Time.new.to_f
 puts 'Connecting to APIC %s' % apicuri

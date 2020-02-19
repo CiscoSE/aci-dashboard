@@ -12,17 +12,26 @@ This repository provides an example of how to create a dashboard that pulls stat
 ```
 cd acirb/examples/acidashboard
 ```
-- Modify jobs/apic.erb to include your APIC IP address and credentials with an account that can query the objects being polled
+- Modify jobs/apic.rb to include your APIC IP address and credentials with an account that can query the objects being polled
 ```
 apicuri = 'https://apic'
 username = 'admin'
 password = 'password'
 ```
-
+- As an alternative you can use the according env vars
+```
+export ACI_APICURI='https://apic'
+export ACI_USERNAME='admin'
+export ACI_PASSWORD='password'
+```
 # Running
 - Start the Docker Container
 ```
 docker run -v=/local/path/to/aci-dashboard/jobs:/jobs -v=/local/path/to/aci-dashboard/widgets:/widgets -v=/local/path/to/aci-dashboard/dashboards:/dashboards -d -e GEMS=acirb -p 3030:3030 frvi/dashing
+```
+- or with env vars
+```
+docker run -v=/local/path/to/aci-dashboard/jobs:/jobs -v=/local/path/to/aci-dashboard/widgets:/widgets -v=/local/path/to/aci-dashboard/dashboards:/dashboards -d -e GEMS=acirb -e ACI_APICURI='https://apic' -e ACI_USERNAME='admin' -e ACI_PASSWORD='password' -p 3030:3030 frvi/dashing
 ```
 - Wait a couple minutes and access your local web server at http://DASHBOARD-SERVER-IP:3030
 - If the container does not have IP access to the APIC, the container will automatically quit.  
